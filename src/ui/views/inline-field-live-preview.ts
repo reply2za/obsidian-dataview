@@ -9,7 +9,7 @@ import {
     ViewUpdate,
     WidgetType,
 } from "@codemirror/view";
-import { InlineField, extractInlineFields, parseInlineValue } from "data-import/inline-field";
+import { extractInlineFields, InlineField, parseInlineValue } from "data-import/inline-field";
 import { canonicalizeVarName } from "util/normalize";
 import { renderCompactMarkdown, renderValue } from "ui/render";
 import { DataviewSettings } from "settings";
@@ -58,7 +58,7 @@ function buildInlineFields(state: EditorState): RangeSet<InlineFieldValue> {
 export const inlineFieldsField = StateField.define<RangeSet<InlineFieldValue>>({
     create: buildInlineFields,
     update(oldFields, tr) {
-        return tr.docChanged ? buildInlineFields(tr.state) : oldFields;
+        return tr.docChanged ? oldFields : buildInlineFields(tr.state);
     },
 });
 
